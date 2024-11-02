@@ -1,4 +1,4 @@
-# Replikasi PostgreSQL dengan Docker tanpa Docker Compose
+# Replikasi PostgreSQL dengan Docker dengan Docker File
 
 Proyek ini adalah contoh konfigurasi replikasi PostgreSQL menggunakan Docker tanpa Docker Compose. Replikasi dilakukan antara dua kontainer PostgreSQL, yaitu `bintang-primary` sebagai *primary* dan `bintang-secondary` sebagai *secondary*. Konfigurasi ini menggunakan `username` dan `password` untuk autentikasi, serta `bintangdb` sebagai basis data yang direplikasi.
 
