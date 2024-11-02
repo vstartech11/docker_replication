@@ -17,7 +17,7 @@ Proyek ini memiliki struktur file sebagai berikut:
 ├── Dockerfile-secondary         # Dockerfile untuk kontainer secondary
 ├── setup-primary.sh             # Skrip konfigurasi untuk primary
 └── setup-secondary.sh           # Skrip konfigurasi untuk secondary
-
+```
 ## Langkah-Langkah Pembuatan Kontainer
 
 Ikuti langkah-langkah berikut untuk membuat kontainer *primary* dan *secondary*, serta menjalankan replikasi:
@@ -25,17 +25,17 @@ Ikuti langkah-langkah berikut untuk membuat kontainer *primary* dan *secondary*,
 ### 1. Membuat Kontainer Primary
 
 Buat dan jalankan kontainer primary:
-
+```
 docker build -f Dockerfile-primary -t bintang-primary .
 docker run --name bintang-primary -e POSTGRES_USER=bintang -e POSTGRES_PASSWORD=bintang123 -d bintang-primary
-
+```
 ### 2. Membuat Kontainer Secondary
 
 Buat dan jalankan kontainer secondary:
-
+```
 docker build -f Dockerfile-secondary -t bintang-secondary .
 docker run --name bintang-secondary --link bintang-primary -e POSTGRES_USER=bintang -e POSTGRES_PASSWORD=bintang123 -d bintang-secondary
-
+```
 ### 3. Verifikasi Replikasi
 
 Untuk memastikan replikasi berjalan, lakukan pengujian berikut:
@@ -52,7 +52,7 @@ Masuk ke dalam kontainer `bintang-primary`:
 docker exec -it bintang-primary psql -U bintang -d bintangdb
 
 Setelah masuk ke *psql* di *primary*, buat tabel dan masukkan data:
-
+```
 CREATE TABLE test_data (
     id SERIAL PRIMARY KEY,
     data VARCHAR(50)
@@ -62,25 +62,25 @@ INSERT INTO test_data (data) VALUES ('Data pertama');
 INSERT INTO test_data (data) VALUES ('Data kedua');
 
 SELECT * FROM test_data;
-
+```
 ##### Periksa Data di Secondary
 
 Masuk ke dalam kontainer `bintang-secondary`:
-
+```
 docker exec -it bintang-secondary psql -U bintang -d bintangdb
-
+```
 Setelah masuk ke *psql* di *secondary*, jalankan perintah berikut untuk melihat data yang direplikasi:
-
+```
 SELECT * FROM test_data;
-
+```
 Jika replikasi berhasil, Anda akan melihat data `Data pertama` dan `Data kedua` yang ditambahkan di *primary* juga ada di *secondary*.
 
 ### 4. Periksa Status Replikasi
 
 Anda dapat memeriksa status replikasi di *primary* untuk memastikan bahwa *secondary* tersinkronisasi dengan baik. Jalankan perintah berikut di kontainer *primary*:
-
+```
 docker exec -it bintang-primary psql -U bintang -d bintangdb -c "SELECT * FROM pg_stat_replication;"
-
+```
 ## Keterangan File
 
 - **Dockerfile-primary**: Konfigurasi Dockerfile untuk membuat kontainer *primary*.
