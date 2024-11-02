@@ -48,9 +48,9 @@ Untuk memastikan replikasi berjalan, lakukan pengujian berikut:
 ##### Masukkan Data di Primary
 
 Masuk ke dalam kontainer `bintang-primary`:
-
+```
 docker exec -it bintang-primary psql -U bintang -d bintangdb
-
+```
 Setelah masuk ke *psql* di *primary*, buat tabel dan masukkan data:
 ```
 CREATE TABLE test_data (
